@@ -6,7 +6,6 @@ hdnsconf="conf-dir=/data/apps/hdns/conf";
 initconfig()
 {
     # generate the modouwifi.net DNS record
-    /bin/sed -ie "/address=\/modouwifi.net/d" $config;
     toip=`nvram_get 2860 lan_ipaddr`;
     strategy="address=/modouwifi.net/$toip";
 
