@@ -1,7 +1,8 @@
 #!/bin/sh
 
 config="/system/conf/dnsmasq.conf";
-hdnsconf="conf-dir=/data/apps/hdns/conf";
+curdir=$(cd $(dirname $0) && pwd)
+hdnsconf="conf-dir=$curdir/conf";
 
 initconfig()
 {
