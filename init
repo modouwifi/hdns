@@ -6,7 +6,7 @@ hdnsconf="conf-dir=$curdir/conf";
 
 usage() {
     echo "ERROR: action missing"
-    echo "syntax: $0 <start|stop|restart|status|config>"
+    echo "syntax: $0 <start|stop|restart|status|config|install|uninstall>"
     echo "example: $0 start"
 }
 
@@ -74,6 +74,10 @@ case "$1" in
         hdnsStatus ;;
     "config" )
         hdnsConfig ;;
+    "install" )
+        echo "install" ;;
+    "uninstall" )
+        echo "uninstall" ;;
     * )
         usage ;;
 esac
