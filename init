@@ -4,60 +4,76 @@ config="/system/conf/dnsmasq.conf";
 curdir=$(cd $(dirname $0) && pwd)
 hdnsconf="conf-dir=$curdir/conf";
 
-initconfig()
-{
-    # generate the modouwifi.net DNS record
-    toip=`nvram_get 2860 lan_ipaddr`;
-    strategy="address=/modouwifi.net/$toip";
-
-    # get hardware version
-    hwver=`/bin/sn_get hw`
-    swver=`/bin/cat /etc/version | /usr/bin/head -n 2 | /usr/bin/tail -n 1`
-    g2mac=`/sbin/ifconfig ra0 | /usr/bin/head -n 1 | /usr/bin/awk '{ print $5}'`
-    g5mac=`/sbin/ifconfig rai0 | /usr/bin/head -n 1 | /usr/bin/awk '{ print $5}'`
-
-    txtRecord="txt-record=all,hwver#$hwver,swver#$swver,2gmac#$g2mac,5gmac#$g5mac"
-
-    /system/sbin/writesys.sh;
-    echo $strategy > $config;
-    echo $txtRecord >> $config;
-    echo $hdnsconf >> $config;
-    /system/sbin/writesys.sh close;
+usage() {
+    echo "ERROR: action missing"
+    echo "syntax: $0 <start|stop|restart|status|config>"
+    echo "example: $0 start"
 }
 
-dnsstop()
-{
-    pid=`/bin/ps|grep dnsmasq|grep -v grep|awk '{print $1}'`;
+delConfDir() {
+    /system/sbin/writesys.sh
+    /bin/sed -ie "/conf-dir/d" $config 1>/dev/null 2>&1
+    /system/sbin/writesys.sh close
+}
+
+addConfDir() {
+    /system/sbin/writesys.sh
+    /bin/sed -ie "/conf-dir/d" $config 1>/dev/null 2>&1
+    echo $hdnsconf >> $config
+    /system/sbin/writesys.sh close
+}
+
+dnsStop() {
+    pid=`/bin/ps|grep dnsmasq|grep -v grep|awk '{print $1}'`
     if [ "$pid" != "" ]; then
-        /bin/kill $pid;
+        /bin/kill $pid
     else
-        /usr/bin/killall dnsmasq;
+        /usr/bin/killall dnsmasq
     fi
 }
 
-dnsstart()
-{
-    initconfig;
-    dnsstop;
+dnsStart() {
+    dnsStop
     /bin/dnsmasq -C "$config" &
+}
+
+hdnsEnable() {
+    addConfDir
+    dnsStart
+}
+
+hdnsDisable() {
+    delConfDir
+    dnsStart
+}
+
+hdnsStatus() {
+    conf=`/bin/grep "conf-dir" $config`
+    echo $conf
+}
+
+hdnsConfig() {
+    ## TBD, need to handle the re-config data from plugin internal logic.
+    ## for hdns, need to move the conf file into ./conf folder, and maybe want
+    ## to restart DNS service
+    dnsStart
 }
 
 # main
 if [ $# -lt 1 ]; then
-    echo "ERROR: action missing";
-    echo "syntax: dns.sh <start|stop|restart>";
-    echo "example: dns.sh start or dns.sh stop"
+    usage
+    exit -1
 fi
 
-if [ "$1" == "start" ]; then
-    dnsstart;
-fi
-
-if [ "$1" == "stop" ]; then
-    dnsstop;
-    exit $?;
-fi
-
-if [ "$1" == "restart" ]; then
-    dnsstart;
-fi
+case "$1" in
+    "start" | "restart" )
+        hdnsEnable ;;
+    "stop" )
+        hdnsDisable ;;
+    "status" )
+        hdnsStatus ;;
+    "config" )
+        hdnsConfig ;;
+    * )
+        usage ;;
+esac
