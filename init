@@ -59,6 +59,10 @@ hdnsConfig() {
     dnsStart
 }
 
+install(){
+    ## init tp_apps.conf dir
+}
+
 # main
 if [ $# -lt 1 ]; then
     usage
@@ -75,7 +79,7 @@ case "$1" in
     "config" )
         hdnsConfig ;;
     "install" )
-        echo "install" ;;
+        install ;;
     "uninstall" )
         echo "uninstall" ;;
     * )
