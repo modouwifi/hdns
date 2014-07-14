@@ -8,13 +8,15 @@ hdns 是运行魔豆上的高级 DNS，它用来对魔豆上的 DNS 进行高级
 
 # 使用
 
-启动 hdns 方法非常简单
-
-	/data/apps/hdns/sbin/hdns.sh restart
+* 前往[https://github.com/modouwifi/hdns/releases](https://github.com/modouwifi/hdns/releases)寻找最新的版本，应该是hdns0.4版本以上，下载对应的压缩包。
+* 在魔豆的屏幕上打开极客模式
+* 使用浏览器打开 [http://modouwifi.net](http://modouwifi.net)，使用极客模式所提示的密码登录
+* 在菜单的[应用](http://modouwifi.net/applications.html)中，将下载的压缩包上传至魔豆，名称为hdns
+* 以后开机均会自动加载hdns了
 
 # 配置文件
 
-所有的配置文件均存放在 `/data/apps/hdns/conf` 中，如果你有更多好的可供他人使用的 conf 欢迎提交
+所有的配置文件均存放在 `/data/apps/xxxx/conf` 中（xxxx是安装时生成的随机数字），如果你有更多好的可供他人使用的 conf 欢迎提交
 
 # 有关魔豆
 
