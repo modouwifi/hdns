@@ -81,6 +81,7 @@ case "$1" in
     "install" )
         install ;;
     "uninstall" )
+        hdnsDisable 
         echo "uninstall" ;;
     * )
         usage ;;
