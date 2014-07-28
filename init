@@ -61,6 +61,7 @@ hdnsConfig() {
 
 install(){
     ## init tp_apps.conf dir
+    echo "installed"
 }
 
 # main
