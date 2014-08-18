@@ -1,10 +1,10 @@
 {
-    "package_id"      : "com.modou.hdns",
+    "package_id"      : "com.modouwifi.hdns",
     "name"            : "科学上网",
     "author"          : "魔豆路由器",
     "author_mail"     : "rd@mochui.net",
     "homepage"        : "www.modouwifi.com",
-    "version"         : "0.4.3",
+    "version"         : "0.4.4",
     "release_date"    : "2014.08.07",
     "icon"            : "./res/icon_111X111.png",
     "location"        : "internal",
