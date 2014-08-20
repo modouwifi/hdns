@@ -5,6 +5,7 @@
     "author_mail"     : "rd@mochui.net",
     "homepage"        : "www.modouwifi.com",
     "version"         : "0.4.4",
+    "os_version"      : "0.5.28",
     "release_date"    : "2014.08.18",
     "icon"            : "./res/icon_111X111.png",
     "location"        : "internal",
