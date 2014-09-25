@@ -4,9 +4,9 @@
     "author"          : "魔豆路由器",
     "author_mail"     : "rd@mochui.net",
     "homepage"        : "www.modouwifi.com",
-    "version"         : "0.4.6",
+    "version"         : "0.4.7",
     "os_version"      : "0.5.28",
-    "release_date"    : "2014.09.12",
+    "release_date"    : "2014.09.25",
     "icon"            : "./res/icon_111X111.png",
     "location"        : "internal",
     "description"     : "自定义DNS"
