@@ -1,4 +1,5 @@
 #!/bin/sh
+#set -x
 
 config="/system/conf/dnsmasq.conf";
 curdir=$(cd $(dirname $0) && pwd)
@@ -12,13 +13,15 @@ usage() {
 
 delConfDir() {
     /system/sbin/writesys.sh
-    /bin/sed -ie "/conf-dir=$hdnsconf/d" $config 1>/dev/null 2>&1
+    local hdnsdir=`echo "$curdir/conf" | sed -e 's:/:\\\\/:g'`
+    /bin/sed -ie "/conf-dir=$hdnsdir/d" $config 1>/dev/null 2>&1
     /system/sbin/writesys.sh close
 }
 
 addConfDir() {
     /system/sbin/writesys.sh
-    /bin/sed -ie "/conf-dir=$hdnsconf/d" $config 1>/dev/null 2>&1
+    local hdnsdir=`echo "$curdir/conf" | sed -e 's:/:\\\\/:g'`
+    /bin/sed -ie "/conf-dir=$hdnsdir/d" $config 1>/dev/null 2>&1
     echo $hdnsconf >> $config
     /system/sbin/writesys.sh close
 }
@@ -67,7 +70,7 @@ install(){
 # main
 if [ $# -lt 1 ]; then
     usage
-    exit -1
+    exit 1
 fi
 
 case "$1" in
